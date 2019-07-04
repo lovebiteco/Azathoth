@@ -5,7 +5,7 @@
 #  |_____\___/ \_/ \___|____/|_|\__\___|
 #                                       
 #  
-#                 Version Azathoth 0.0.1
+#                 Version Azathoth 0.0.2
 #  
 #                       Leonardo Corsaro
 #  Nicola Gigante <nicolagigante@outlook.com>
@@ -48,7 +48,28 @@ class UserBio(BaseModel):
     image_url_3 = models.URLField()
     image_url_4 = models.URLField()
     image_url_5 = models.URLField()
-    
+
+class UserLikes(BaseModel):
+    user = ProtectedForeignKey('User', related_name='likes')
+    liked_user = models.CharField(max_length=200)
+    liked_at = models.DateTimeField()
+
+class UserNopes(BaseModel):
+    user = ProtectedForeignKey('User', related_name='nopes')
+    noped_user = models.CharField(max_length=200)
+    noped_at = models.DateTimeField()
+
+class UserBlocked(BaseModel):
+    user = ProtectedForeignKey('User', related_name='blocked')
+    blocked_user = models.CharField(max_length=200)
+    blocked_at = models.DateTimeField()
+
+class UserMatched(BaseModel):
+    user = ProtectedForeignKey()
+    matched_user = models.CharField(max_length=200)
+    matched_at = models.DateTimeField()
+
+
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True, null=True)
     first_name = models.CharField(max_length=250, null=False, blank=False)
@@ -60,3 +81,8 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     preferences = models.ManyToManyField(UserPreferences, related_name='preferences', blank=True)
     bio = models.ManyToManyField(UserBio, related_name='bio', blank=True)
+    likes = models.ManyToManyField(UserLikes, related_name='likes')
+    nopes = models.ManyToManyField(UserNopes, related_name='nopes')
+    blocked = models.ManyToManyField(UserBlocked, related_name='blocked')
+    matched = models.ManyToManyField(UserMatched, related_name='matched')
+
