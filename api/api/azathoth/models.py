@@ -5,7 +5,6 @@
 #  |_____\___/ \_/ \___|____/|_|\__\___|
 #                                       
 #  
-#                 Version Azathoth 0.0.2
 #  
 #                       Leonardo Corsaro
 #  Nicola Gigante <nicolagigante@outlook.com>
