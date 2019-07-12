@@ -13,6 +13,14 @@ class UserViewSet(base.BaseModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = user_filter.UserFilter
 
+    @action(detail=False, methods=['post'])
+    def add_new_student(self, request):
+        first_name = self.request.data.get('first_name', None)
+        last_name = self.request.data.get('last_name', None)
+        email = self.request.data.get('email', None)
+        
+
+
     def get_queryset(self):
         queryset = User.objects.all().distinct()
         return queryset

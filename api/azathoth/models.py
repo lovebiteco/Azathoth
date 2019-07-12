@@ -85,3 +85,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     blocked = models.ManyToManyField(UserBlocked, related_name='blocked')
     matched = models.ManyToManyField(UserMatched, related_name='matched')
 
+    def __str__(self):
+        return self.email
+
