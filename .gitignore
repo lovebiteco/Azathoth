@@ -9,3 +9,4 @@ api/azathoth/serializers/__pycache__/
 api/azathoth/filters/__pycache__/
 api/api/__pycache__/settings.cpython-36.pyc
 api/api/__pycache__/urls.cpython-36.pyc
+api/api/settings_local.py
