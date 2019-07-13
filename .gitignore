@@ -1,0 +1,9 @@
+.vscode/
+api/api/db.sqlite3
+api/azathoth/__pycache__/
+api/azathoth/migrations/
+api/lib/__pycache__/
+api/api/__pycache__/
+api/azathoth/view_sets/__pycache__/
+api/azathoth/serializers/__pycache__/
+api/azathoth/filters/__pycache__/
