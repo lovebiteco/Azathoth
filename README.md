@@ -2,6 +2,10 @@
 Azathoth is LoveBite's API System.
 The API System, written in Django and Python, is the link between the various end-user interfaces and the inner workings of LoveBite.
 
+## A Warning to Thrill-seekers
+All revisions dated 13/07 onwards may fail to run properly (or at all!) when pulled directly from Git. This is because newer revisions rely on a separate, unversioned settings file, named settings_local.py, which builds upon the standard file included in the Django app. As this file contains sensitive info, it *can not* and *must not* be put into *any* external versioning system for *any* reason whatsoever.
+A template file is due to be released in order to enable testing.
+
 ## Description
 
 ### What Azathoth isn't
