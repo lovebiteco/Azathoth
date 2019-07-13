@@ -10,10 +10,9 @@ class CustomUserAdmin(UserAdmin):
     form = CustomUserChangeForm
     model = User
     list_display = [
-        'id', 'reference_id', 'first_name', 'last_name', 'email',
-        'date_of_birth', 'gender', 'last_access', 'last_known_position',
-        'preferences', 'bio', 'likes', 'nopes', 'blocked', 'matched'
-    ]
+            'id', 'reference_id', 'username', 'email', 'is_staff', 'is_active', 'is_superuser', 'first_name', 'last_name',
+            'date_of_birth', 'gender', 'last_access', 'last_known_position',
+        ]
 
 admin.site.register(User, CustomUserAdmin)
 

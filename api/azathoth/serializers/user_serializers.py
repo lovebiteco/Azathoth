@@ -8,6 +8,7 @@ class UserSerializer(serializers.ModelSerializer):
         model = models.User
         fields = {
             'id', 'reference_id', 'first_name', 'last_name', 'email',
+            'is_staff', 'is_active', 'is_superuser',
             'date_of_birth', 'gender', 'last_access', 'last_known_position',
             'preferences', 'bio', 'likes', 'nopes', 'blocked', 'matched'
         }
