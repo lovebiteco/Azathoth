@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from django.urls import reverse_lazy
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -43,6 +45,7 @@ INSTALLED_APPS = [
     'rest_auth.registration',
     'allauth',
     'allauth.account',
+    'allauth.socialaccount',
     'azathoth',
 ]
 
@@ -60,10 +63,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'api.urls'
 
+TEMPLATES_ROOT = os.path.join(BASE_DIR, "templates")
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_ROOT],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -129,7 +134,19 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Django-AllAuth settings
 SITE_ID = 1
+AUTHENTICATION_BACKENDS = (
+    # default
+    'django.contrib.auth.backends.ModelBackend',
+    # email login
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy('account_confirm_complete')
+ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_confirm_complete')
 
 from .settings_local import *

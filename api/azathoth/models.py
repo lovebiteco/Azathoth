@@ -29,6 +29,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('This field must not be empty.')
         email = self.normalize_email(email)
         user = self.model(email=email, username=username,**extra_fields)
+        user.is_active = True
         user.set_password(password)
         user.save()
         return user
@@ -89,7 +90,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=125)
 
     is_staff = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
 
     email = models.EmailField(unique=True, null=True)
