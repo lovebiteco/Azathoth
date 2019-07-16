@@ -48,40 +48,19 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
 
-class UserPreferences(BaseModel):
-    user_preferences = ProtectedForeignKey('User', related_name='user_preferences', null=False)
-    looking_for = models.CharField(max_length=50)
-    interested_in = models.CharField(max_length=750)
-    similar_match = models.BooleanField(default=False)
-
-class UserBio(BaseModel):
-    user_bio = models.ForeignKey('User', related_name='user_bio', null=False, on_delete=models.PROTECT)
-    description = models.CharField(max_length=500, null=False, blank=True)
-    dept_name = models.CharField(max_length=125, null=False, blank=False)
-    university_name = models.CharField(max_length=125, null=False, blank=False)
-    image_url_1 = models.URLField(null=False, blank=False)
-    image_url_2 = models.URLField()
-    image_url_3 = models.URLField()
-    image_url_4 = models.URLField()
-    image_url_5 = models.URLField()
-
 class UserLikes(BaseModel):
-    user_likes = ProtectedForeignKey('User', related_name='user_likes')
     liked_user = models.CharField(max_length=200)
     liked_at = models.DateTimeField()
 
 class UserNopes(BaseModel):
-    user_nopes = ProtectedForeignKey('User', related_name='user_nopes')
     noped_user = models.CharField(max_length=200)
     noped_at = models.DateTimeField()
 
 class UserBlocked(BaseModel):
-    user_blocked = ProtectedForeignKey('User', related_name='user_blocked')
     blocked_user = models.CharField(max_length=200)
     blocked_at = models.DateTimeField()
 
 class UserMatched(BaseModel):
-    user_matched = ProtectedForeignKey('User', related_name='user_matched')
     matched_user = models.CharField(max_length=200)
     matched_at = models.DateTimeField()
 
@@ -102,8 +81,20 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     last_access = models.DateTimeField(null=True)
     last_known_position = models.CharField(max_length=250,blank=True)
 
-    preferences = models.ManyToManyField(UserPreferences, related_name='preferences', blank=True)
-    bio = models.ManyToManyField(UserBio, related_name='bio', blank=True)
+    looking_for = models.CharField(max_length=50)
+    interested_in = models.CharField(max_length=750)
+    similar_match = models.BooleanField(default=False)
+
+    description = models.CharField(max_length=500, null=False, blank=True)
+    dept_name = models.CharField(max_length=125, null=False, blank=False, default="Engineering")
+    university_name = models.CharField(max_length=125, null=False, blank=False, default="UCL")
+    image_url_1 = models.URLField(blank=True)
+    image_url_2 = models.URLField(blank=True)
+    image_url_3 = models.URLField(blank=True)
+    image_url_4 = models.URLField(blank=True)
+    image_url_5 = models.URLField(blank=True)
+
+
     likes = models.ManyToManyField(UserLikes, related_name='likes')
     nopes = models.ManyToManyField(UserNopes, related_name='nopes')
     blocked = models.ManyToManyField(UserBlocked, related_name='blocked')

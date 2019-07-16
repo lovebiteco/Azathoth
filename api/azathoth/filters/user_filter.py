@@ -11,7 +11,7 @@ class UserFilter(BaseFilterSet):
         fields = [
             'id', 'reference_id', 'first_name', 'last_name', 'email',
             'date_of_birth', 'gender', 'last_access', 'last_known_position',
-            'preferences', 'bio', 'likes', 'nopes', 'blocked', 'matched'
+            'likes', 'nopes', 'blocked', 'matched'
         ]
 
     def filter_reference_id(self, queryset, name, value):
