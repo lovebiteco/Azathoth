@@ -6,12 +6,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.User
-        fields = {
+        fields = [
             'id', 'reference_id', 'first_name', 'last_name', 'email',
             'is_staff', 'is_active', 'is_superuser',
             'date_of_birth', 'gender', 'last_access', 'last_known_position',
             'preferences', 'bio', 'likes', 'nopes', 'blocked', 'matched'
-        }
+        ]
 
 class UserBioSerializer(serializers.ModelSerializer):
 

@@ -21,11 +21,12 @@ from allauth.account.views import ConfirmEmailView
 
 from azathoth import views
 from azathoth.view_sets import (
-    user_view, registration_view
+    user_view, registration_view, update_fields_view
 )
 
 default_router = routers.DefaultRouter()
-default_router.register(r'user', user_view.UserViewSet, base_name='user')
+default_router.register(r'godmode', user_view.UserViewSet, base_name='godmode')
+default_router.register(r'user', update_fields_view.UpdateFieldsViewSet, base_name='user')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
