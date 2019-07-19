@@ -16,7 +16,7 @@ class FetchNearUsersViewSet(base.BaseModelViewSet):
     filter_backends = (filters.DjangoFilterBackend, )
     filterset_class = user_filter.UserFilter
 
-    @action(detail=False, method=['get'])
+    @action(detail=False, methods=['get'])
     def fetch_users(self, request):
         user_1_reference_id = request.user.reference_id
         last_user_location = UserLocation.objects.filter(users__reference_id=user_1_reference_id).order_by('-created_at')[0]["location"]

@@ -47,6 +47,7 @@ class CustomUserManager(BaseUserManager):
         user.is_active = True
         user.is_staff = True
         user.is_superuser = True
+        user.is_first_login = False
         user.set_password(password)
         user.save()
         return user
@@ -63,6 +64,7 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
+    is_first_login = models.BooleanField(default=True)
 
     email = models.EmailField(unique=True, null=True)
     first_name = models.CharField(max_length=250, null=False, blank=False)
