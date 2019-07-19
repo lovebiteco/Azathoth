@@ -44,3 +44,11 @@ class UserMatchedSerializer(serializers.ModelSerializer):
             'id', 'reference_id', 'users', 'matched_user', 'matched_at'
         }
 
+class UserLocationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.UserLocation
+        fields = {
+            'id', 'reference_id', 'users', 'location', 'created_at'
+        }
+

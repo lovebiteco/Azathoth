@@ -13,6 +13,7 @@
 
 
 from django.db import models
+from django.contrib.gis.db import models as models_gis
 from datetime import timedelta
 from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
@@ -20,6 +21,8 @@ from django.utils import timezone
 
 from lib.fields import ProtectedForeignKey
 from lib.models import BaseModel
+
+import uuid
 
 class CustomUserManager(BaseUserManager):
     def _create_user(self, email, username, password, **extra_fields):
@@ -60,7 +63,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
-    is_first_login = models.BooleanField(default=True)
 
     email = models.EmailField(unique=True, null=True)
     first_name = models.CharField(max_length=250, null=False, blank=False)
@@ -68,7 +70,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     date_of_birth = models.DateTimeField(null=True)
     gender = models.CharField(max_length=30, null=False, blank=False)
     last_access = models.DateTimeField(null=True)
-    last_known_position = models.CharField(max_length=250,blank=True)
 
     looking_for = models.CharField(max_length=50)
     interested_in = models.CharField(max_length=750)
@@ -105,4 +106,12 @@ class UserMatched(BaseModel):
     matched_user = models.CharField(max_length=200)
     matched_at = models.DateTimeField()
     users = models.ManyToManyField(User)
+
+class UserLocation(models_gis.Model):
+    users = models_gis.ManyToManyField(User)
+    location = models_gis.PointField()
+    created_at = models_gis.DateTimeField(editable=False, auto_now_add=True)
+    reference_id = models_gis.UUIDField(default=uuid.uuid4, editable=False, unique=True)
+
+
 

@@ -1,12 +1,15 @@
 from . import base
-from azathoth.serializers.user_serializers import UserSerializer, UserLikesSerializer, UserNopesSerializer, UserMatchedSerializer
+from azathoth.serializers.user_serializers import UserSerializer, UserLikesSerializer, UserNopesSerializer, UserMatchedSerializer, UserLocationSerializer
 from azathoth.filters import user_filter, user_likes_filter, user_nopes_filter, user_matched_filter
-from azathoth.models import User, UserLikes, UserNopes, UserMatched
+from azathoth.models import User, UserLikes, UserNopes, UserMatched, UserLocation
 from rest_framework.decorators import action
 from django.contrib.auth.decorators import login_required
 from rest_framework.response import Response
 from django_filters import rest_framework as filters
 from datetime import datetime
+
+## GIS
+from django.contrib.gis.geos import Point
 
 class AddNopesFieldsViewSet(base.BaseModelViewSet):
     serializer_class = UserNopesSerializer
@@ -78,6 +81,25 @@ class SwipeRightFieldsView(base.BaseModelViewSet):
             user_1 = User.objects.get(reference_id=user_1_reference_id)
             new_like.users.add(user_1)
             return Response("Query added.")
+
+class AddLocationFieldsView(base.BaseModelViewSet):
+    serializer_class = UserLocationSerializer
+    filter_backends = (filters.DjangoFilterBackend, )
+    filterset_class = None
+
+    @action(detail=False, methods=['post'])
+    def add_location(self, request):
+        user_1_reference_id = request.user.reference_id
+        request_data = request.data
+        longitude = request_data["longitude"]
+        latitude = request_data["latitude"]
+        user_location = Point(longitude, latitude, srid=4326)
+        new_location = UserLocation(location=user_location)
+        new_location.save()
+        user_1 = User.objects.get(reference_id=user_1_reference_id)
+        new_location.users.add(user_1)
+        return Response("Query added.")
+
 
 
 

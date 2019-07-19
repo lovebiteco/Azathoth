@@ -20,7 +20,7 @@ from rest_framework import routers
 from allauth.account.views import ConfirmEmailView
 from azathoth import views
 from azathoth.view_sets import (
-    user_view, registration_view, update_fields_view, add_fields_view
+    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view
 )
 
 from django_private_chat import urls as django_private_chat_urls
@@ -31,11 +31,15 @@ default_router.register(r'user', update_fields_view.UpdateFieldsViewSet, base_na
 swipes_router = routers.DefaultRouter()
 swipes_router.register(r'right', add_fields_view.SwipeRightFieldsView, base_name='swiperight')
 swipes_router.register(r'left', add_fields_view.AddNopesFieldsViewSet, base_name='swipeleft')
+location_router = routers.DefaultRouter()
+location_router.register(r'add', add_fields_view.AddLocationFieldsView, base_name='addlocation')
+location_router.register(r'fetch', fetch_near_users_view.FetchNearUsersViewSet, base_name='fetchnearusers')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/v1/', include(default_router.urls)),
-    url(r'^api/v1/swipe/', include(swipes_router.urls))
+    url(r'^api/v1/swipe/', include(swipes_router.urls)),
     url(r'^api/v1/accounts/', include('allauth.urls')),
-    path('', include('django_private_chat.urls')),
+    url(r'^api/v1/chat/', include('django_private_chat.urls')),
+    url(r'^api/v1/location/', include(location_router.urls)),
 ]

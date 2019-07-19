@@ -10,7 +10,7 @@ class UserFilter(BaseFilterSet):
         model = User
         fields = [
             'id', 'reference_id', 'first_name', 'last_name', 'email',
-            'date_of_birth', 'gender', 'last_access', 'last_known_position',
+            'date_of_birth', 'gender', 'last_access',
             'looking_for', 'interested_in', 'similar_match', 'description',
             'dept_name', 'university_name', 'image_url_1', 'image_url_2',
             'image_url_3', 'image_url_4', 'image_url_5'
