@@ -23,7 +23,16 @@ class FetchNearUsersViewSet(base.BaseModelViewSet):
         queryset = UserLocation.objects.order_by('-created_at').distinct()
         queryset = queryset.exclude(users__reference_id=user_1_reference_id)
         queryset = queryset.annotate(distance=Distance('location', last_user_location)).order_by('distance')[0:100]
-        return Response(queryset, status=200)
+        final_list = []
+        context = {}
+        for item in queryset:
+            context['id'] = item['id']
+            context['reference_id'] = item['reference_id']
+            context['user_id'] = item['users__reference_id']
+            context['distance'] = item['distance']
+            final_list.append(context)
+            context = {}
+        return Response(final_list, status=200)
 
 
         
