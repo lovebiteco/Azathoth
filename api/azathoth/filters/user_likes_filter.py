@@ -9,7 +9,7 @@ class UserFilter(BaseFilterSet):
     class Meta:
         model = UserLikes
         fields = [
-            'id', 'reference_id', 'user', 'liked_user', 'liked_at'
+            'id', 'reference_id', 'users', 'liked_user', 'liked_at'
         ]
 
     def filter_reference_id(self, queryset, name, value):

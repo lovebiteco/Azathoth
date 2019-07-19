@@ -1,6 +1,5 @@
 from . import base
 from azathoth.serializers.user_serializers import UserSerializer
-#from filters import user_filter
 from azathoth.filters import user_filter
 from azathoth.models import User
 from rest_framework.decorators import action
@@ -12,7 +11,6 @@ import ast
 
 class UpdateFieldsViewSet(base.BaseModelViewSet):
     serializer_class = UserSerializer
-    #authentication_classes = [TokenAuthentication]
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = user_filter.UserFilter
 
@@ -118,6 +116,16 @@ class UpdateFieldsViewSet(base.BaseModelViewSet):
         queryset = User.objects.filter(reference_id=reference_id)
         if request_data["gender"] is not "":
             queryset.update(gender=request_data["gender"])
+        queryset.update(modified_at = datetime.now())
+        return Response("Query updated")
+
+    @action(detail=False, methods=['post'])
+    def update_last_known_position(self, request):
+        reference_id = request.user.reference_id
+        request_data = request.data
+        queryset = User.objects.filter(reference_id=reference_id)
+        if request_data["last_known_position"] is not "":
+            queryset.update(last_known_position=request_data["last_known_position"])
         queryset.update(modified_at = datetime.now())
         return Response("Query updated")
 

@@ -48,22 +48,11 @@ class CustomUserManager(BaseUserManager):
         user.save()
         return user
 
-class UserLikes(BaseModel):
-    liked_user = models.CharField(max_length=200)
-    liked_at = models.DateTimeField()
 
-class UserNopes(BaseModel):
-    noped_user = models.CharField(max_length=200)
-    noped_at = models.DateTimeField()
 
 class UserBlocked(BaseModel):
     blocked_user = models.CharField(max_length=200)
     blocked_at = models.DateTimeField()
-
-class UserMatched(BaseModel):
-    matched_user = models.CharField(max_length=200)
-    matched_at = models.DateTimeField()
-
 
 class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=125)
@@ -94,12 +83,6 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
     image_url_4 = models.URLField(blank=True)
     image_url_5 = models.URLField(blank=True)
 
-
-    likes = models.ManyToManyField(UserLikes, related_name='likes')
-    nopes = models.ManyToManyField(UserNopes, related_name='nopes')
-    blocked = models.ManyToManyField(UserBlocked, related_name='blocked')
-    matched = models.ManyToManyField(UserMatched, related_name='matched')
-
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'username'
@@ -107,4 +90,19 @@ class User(BaseModel, AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+
+class UserLikes(BaseModel):
+    liked_user = models.CharField(max_length=200)
+    liked_at = models.DateTimeField()
+    users = models.ManyToManyField(User)
+
+class UserNopes(BaseModel):
+    noped_user = models.CharField(max_length=200)
+    noped_at = models.DateTimeField()
+    users = models.ManyToManyField(User)
+
+class UserMatched(BaseModel):
+    matched_user = models.CharField(max_length=200)
+    matched_at = models.DateTimeField()
+    users = models.ManyToManyField(User)
 
