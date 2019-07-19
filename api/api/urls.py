@@ -18,11 +18,12 @@ from django.conf.urls import include, url
 from django.urls import path
 from rest_framework import routers
 from allauth.account.views import ConfirmEmailView
-
 from azathoth import views
 from azathoth.view_sets import (
     user_view, registration_view, update_fields_view
 )
+
+from django_private_chat import urls as django_private_chat_urls
 
 default_router = routers.DefaultRouter()
 default_router.register(r'godmode', user_view.UserViewSet, base_name='godmode')
@@ -32,4 +33,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/v1/', include(default_router.urls)),
     url(r'^api/v1/accounts/', include('allauth.urls')),
+    path('', include('django_private_chat.urls')),
 ]

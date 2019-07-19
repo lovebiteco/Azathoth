@@ -1,0 +1,7 @@
+Django
+django-filters
+django-private-chat
+djangorestframework
+django-rest-auth
+django-allauth
+django-session-timeout
