@@ -20,14 +20,15 @@ from rest_framework import routers
 from allauth.account.views import ConfirmEmailView
 from azathoth import views
 from azathoth.view_sets import (
-    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view
+    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view, fetch_user_details
 )
 
 from django_private_chat import urls as django_private_chat_urls
 
 default_router = routers.DefaultRouter()
 default_router.register(r'godmode', user_view.UserViewSet, base_name='godmode')
-default_router.register(r'user', update_fields_view.UpdateFieldsViewSet, base_name='user')
+default_router.register(r'addtouser', update_fields_view.UpdateFieldsViewSet, base_name='addtouser')
+default_router.register(r'fetchuser', fetch_user_details.FetchUserDetails, base_name='fetchuser')
 swipes_router = routers.DefaultRouter()
 swipes_router.register(r'right', add_fields_view.SwipeRightFieldsView, base_name='swiperight')
 swipes_router.register(r'left', add_fields_view.AddNopesFieldsViewSet, base_name='swipeleft')
