@@ -22,6 +22,13 @@ class FetchNearUsersViewSet(base.BaseModelViewSet):
         last_user_location = UserLocation.objects.filter(users__reference_id=user_1_reference_id).order_by('-created_at')[0]["location"]
         queryset = UserLocation.objects.order_by('-created_at').distinct()
         queryset = queryset.exclude(users__reference_id=user_1_reference_id)
+        user_1_preferred = User.objects.get(reference_id=user_1_reference_id).looking_for
+        ## Filter out people based on user's preference.
+        if user_1_preferred is "MF" or "FM":
+            pass
+        else:
+            queryset = queryset.filter(users__gender=user_1_preferred)
+            
         queryset = queryset.annotate(distance=Distance('location', last_user_location)).order_by('distance')[0:100]
         final_list = []
         context = {}

@@ -23,6 +23,7 @@ class FetchUserDetails(base.BaseModelViewSet):
         context['user_id'] = request_data["reference_id"]
         context['first_name'] = user.first_name
         context['last_name'] = user.last_name
+        context['gender'] = user.gender
         context['university_name'] = user.university_name
         context['dept_name'] = user.dept_name
         context['description'] = user.description

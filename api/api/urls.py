@@ -20,7 +20,7 @@ from rest_framework import routers
 from allauth.account.views import ConfirmEmailView
 from azathoth import views
 from azathoth.view_sets import (
-    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view, fetch_user_details
+    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view, fetch_user_details, login_view
 )
 
 from django_private_chat import urls as django_private_chat_urls
@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^api/v1/', include(default_router.urls)),
     url(r'^api/v1/swipe/', include(swipes_router.urls)),
     url(r'^api/v1/accounts/', include('allauth.urls')),
+    path('api/v1/accounts/successful/', login_view.login_successful),
     url(r'^api/v1/chat/', include('django_private_chat.urls')),
     url(r'^api/v1/location/', include(location_router.urls)),
 ]

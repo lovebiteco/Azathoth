@@ -155,4 +155,7 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_co
 
 SESSION_EXPIRE_SECONDS = 3600
 
+LOGIN_REDIRECT_URL = "/api/v1/accounts/successful/"
+LOGIN_URL = "/api/v1/accounts/login/"
+
 from .settings_local import *
