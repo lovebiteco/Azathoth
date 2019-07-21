@@ -120,13 +120,10 @@ class UpdateFieldsViewSet(base.BaseModelViewSet):
         return Response("Query updated")
 
     @action(detail=False, methods=['post'])
-    def update_last_known_position(self, request):
+    def update_last_access(self, request):
         reference_id = request.user.reference_id
-        request_data = request.data
         queryset = User.objects.filter(reference_id=reference_id)
-        if request_data["last_known_position"] is not "":
-            queryset.update(last_known_position=request_data["last_known_position"])
-        queryset.update(modified_at = datetime.now())
+        queryset.update(last_access = datetime.now())
         return Response("Query updated")
 
 

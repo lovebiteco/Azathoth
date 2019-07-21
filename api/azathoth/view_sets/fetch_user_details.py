@@ -29,6 +29,7 @@ class FetchUserDetails(base.BaseModelViewSet):
         context['description'] = user.description
         age = datetime.now().year - user.date_of_birth.year
         context['age'] = age
+        context['last_access'] = user.last_access
         final_list.append(context)
         return Response(final_list, status=200)
 
