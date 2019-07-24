@@ -4,9 +4,8 @@ from django.http import HttpResponse
 from rest_framework import viewsets, permissions
 from rest_framework.renderers import JSONRenderer
 from django_filters import rest_framework as filters
-from knox.auth import TokenAuthentication
 from lib.filters import BaseFilterSet, BaseRefFilterSet
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 
 #from api import models
 

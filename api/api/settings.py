@@ -43,14 +43,29 @@ INSTALLED_APPS = [
     'django_filters',
     'django_private_chat',
     'rest_framework',
-    'rest_email_auth',
-    'knox',
+    'rest_framework.authtoken',
+    'drfpasswordless',
+    'allauth',
+    'rest_auth.registration',
     'azathoth',
 ]
 
 
 
 AUTH_USER_MODEL = 'azathoth.User'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+}
+
+     
+
+PASSWORDLESS_AUTH = {
+   'PASSWORDLESS_AUTH_TYPES': ['EMAIL'],
+   'PASSWORDLESS_REGISTER_NEW_USERS': False,
+}
 
 
 MIDDLEWARE = [
@@ -143,18 +158,11 @@ AUTHENTICATION_BACKENDS = (
     # default
     'django.contrib.auth.backends.ModelBackend',
     # email login
-    'rest_email_auth.authentication.VerifiedEmailBackend',
 )
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
-ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = reverse_lazy('account_confirm_complete')
-ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = reverse_lazy('account_confirm_complete')
 
-SESSION_EXPIRE_SECONDS = 3600
-
-LOGIN_REDIRECT_URL = "/api/v1/accounts/successful/"
-LOGIN_URL = "/api/v1/accounts/login/"
 
 from .settings_local import *

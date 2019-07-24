@@ -19,11 +19,10 @@ from django.urls import path
 from rest_framework import routers
 from azathoth import views
 from azathoth.view_sets import (
-    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view, fetch_user_details, login_view
+    user_view, registration_view, update_fields_view, add_fields_view, fetch_near_users_view, fetch_user_details
 )
 
 from django_private_chat import urls as django_private_chat_urls
-from knox import views as knox_views
 
 default_router = routers.DefaultRouter()
 default_router.register(r'godmode', user_view.UserViewSet, base_name='godmode')
@@ -40,10 +39,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api/v1/', include(default_router.urls)),
     url(r'^api/v1/swipe/', include(swipes_router.urls)),
-    url(r'^api/v1/auth/login/', login_view.LoginView.as_view(), name='knox_login'),
-    url(r'^api/v1/auth/logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
-    url(r'^api/v1/auth/logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
-    path('api/v1/account/', include('rest_email_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
+    path('', include('drfpasswordless.urls')),
     url(r'^api/v1/chat/', include('django_private_chat.urls')),
     url(r'^api/v1/location/', include(location_router.urls)),
 ]

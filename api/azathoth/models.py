@@ -25,14 +25,13 @@ from lib.models import BaseModel
 import uuid
 
 class CustomUserManager(BaseUserManager):
-    def _create_user(self, email, username, password, **extra_fields):
+    def create_user(self, email, username, password, **extra_fields):
         if not email:
             raise ValueError('The email field must not be empty.')
         if not username:
             raise ValueError('This field must not be empty.')
         email = self.normalize_email(email)
         user = self.model(email=email, username=username,**extra_fields)
-        user.is_active = True
         user.set_password(password)
         user.save()
         return user
