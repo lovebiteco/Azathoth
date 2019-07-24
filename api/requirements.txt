@@ -3,5 +3,6 @@ django-filters
 django-private-chat
 djangorestframework
 django-rest-auth
-django-allauth
 django-session-timeout
+django-rest-email-auth
+django-rest-knox

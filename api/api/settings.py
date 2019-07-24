@@ -43,16 +43,15 @@ INSTALLED_APPS = [
     'django_filters',
     'django_private_chat',
     'rest_framework',
-    'rest_framework.authtoken',
-    'rest_auth',
-    'rest_auth.registration',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
+    'rest_email_auth',
+    'knox',
     'azathoth',
 ]
 
+
+
 AUTH_USER_MODEL = 'azathoth.User'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -144,7 +143,7 @@ AUTHENTICATION_BACKENDS = (
     # default
     'django.contrib.auth.backends.ModelBackend',
     # email login
-    'allauth.account.auth_backends.AuthenticationBackend',
+    'rest_email_auth.authentication.VerifiedEmailBackend',
 )
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
