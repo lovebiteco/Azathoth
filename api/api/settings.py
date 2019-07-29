@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drfpasswordless',
     'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
     'rest_auth.registration',
     'azathoth',
 ]

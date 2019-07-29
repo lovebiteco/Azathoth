@@ -1,8 +1,16 @@
+python-dateutil
 Django
 django-filters
+django-filter
 django-private-chat
 djangorestframework
 django-rest-auth
 django-session-timeout
 django-rest-email-auth
 django-rest-knox
+drfpasswordless
+django-allauth
+gunicorn
+python-dotenv
+dj-database-url
+psycopg2
